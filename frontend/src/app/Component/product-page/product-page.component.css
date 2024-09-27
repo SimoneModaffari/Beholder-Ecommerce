@@ -1,0 +1,13 @@
+
+@media only screen and (max-width: 720px){
+  .xyz{
+    flex-direction: column !important;
+    .immagine{
+      width: 75% !important;
+    }
+    .descrizione{
+      width: 100%!important;
+      margin: 10px;
+    }
+  }
+}

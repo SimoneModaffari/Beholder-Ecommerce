@@ -1,0 +1,31 @@
+<div class="container d-flex flex-column" style="margin-bottom: 15%; margin-top: 1%;">
+      <div *ngIf="order.orderStatus!='ACTIVE' ">
+        <div class="d-flex flex-column  my-2" style="background-color: #f6f6f6;">
+          <div class="card d-flex flex-row align-items-center" style="width: auto;">
+            <img src="{{'data:image/jpg;base64,' + order.productsInOrder[0].product.picture}}" class="img-thumbnail" width="128px" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Ordine N°: #{{order.orderID}}</h5>
+              <p class="card-text">Prezzo: € {{order.total}}</p>
+              <p class="card-text">Data di acquisto: {{order.orderData | date:'dd/MM/yyyy' }}</p>
+              <p class="card-text">Stato dell'Ordine: {{order.orderStatus}}</p>
+              <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapseExample'" aria-expanded="false" [attr.aria-controls]="'collapseExample'">
+                Vedi Prodotti
+              </button>
+            </div>
+          </div>
+          <div class="collapse m-3" [id]="'collapseExample'">
+            <div class="container d-flex flex-column" style="max-height: 300px; overflow-y: auto;">
+              <div *ngFor="let p of order.productsInOrder">
+                <div class="card card-body flex-row">
+                  <img src="{{'data:image/jpg;base64,' + p.product.picture}}" class="img-thumbnail" width="64px" alt="...">
+                  <div class="d-flex flex-column">
+                    <a a [routerLink]="['/admin',  { outlets: { 'content': ['admin-product-edit',p.product.productID] } }] " style="color: black;"><h5 class="card-title">{{p.product.name}}</h5></a>
+                    <p>Qt.à {{p.quantity}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

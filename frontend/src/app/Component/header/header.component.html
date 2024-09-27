@@ -1,0 +1,84 @@
+<div class="header" style="z-index: 1999;">
+  <div class="container-fluid d-flex flex-column p-1">
+    <div class="secondoHeader container-fluid h-25 d-flex flex-row m-0" >
+      <div class="container-fluid Logo d-flex flex-row align-items-center align-content-center w-25"[ngClass]="{'centraLogo': larghezzaFinestra<768}">
+        <img src="/assets/Media/images/logo.png" class="logo img-thumbnail bg-transparent"alt="logo" >
+        <img src="/assets/Media/images/textLogo.png" class="nomeLogo img-thumbnail bg-transparent" alt="logo">
+        <div *ngIf="larghezzaFinestra<1025"type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#df0000" class="bi bi-list" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+        </svg></div>
+      </div>
+      <div class="container navigation justify-content-end d-flex flex-row"[ngClass]="{'nascondi': larghezzaFinestra < 1025}" >
+        <div class="container menu w-75 d-flex flex-row justify-content-around m-0">
+          <a href="/home" class="navigazione w-25 p-3 d-flex justify-content-center align-items-center">Home</a>
+          <a href="/shop/tutti/page/0" class="navigazione w-25 p-3 d-flex justify-content-center align-items-center">Shop</a>
+          <a class="navigazione w-25 p-3 d-flex justify-content-center align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+          </svg>&nbsp;Account <ul class="dropdown-menu bg-dark" [ngSwitch]="isLoggedIn">
+            <div *ngSwitchCase="true">
+              <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
+              <li><a class="dropdown-item" (click)="storicoOrdini()">Storico Ordini</a></li>
+            </div>
+            <li *ngSwitchCase="false" >
+              <a class="dropdown-item" (click)="login()">Login</a>
+            </li>
+          </ul></a>
+          <a href="/carrello" class="navigazione w-25 p-3 d-flex justify-content-center align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+          </svg>&nbsp;Carrello</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel" style="background: linear-gradient(180deg, rgba(105,105,105,1) 0%, rgba(80,80,80,1) 35%, rgba(0,0,0,1) 94%); max-width: 90%!important; padding-top:15%!important;">
+  <div class="offcanvas-header">
+    <img src="/assets/Media/images/logo.png" class="logo img-fluid bg-transparent"alt="logo" >
+    <img src="/assets/Media/images/textLogo.png" class="nomeLogo img-fluid bg-transparent" alt="logo">
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="links h-75">
+      <a href="home" class="navigazione w-50 p-3 d-flex align-items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+          <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
+        </svg>&nbsp;Home
+      </a>
+      <a href="/shop/tutti/page/0" class="navigazione w-50 p-3 d-flex align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
+        <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+        </svg>&nbsp;Shop
+      </a>
+      <a href="contatti" class="navigazione w-50 p-3 d-flex align-items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-person-rolodex" viewBox="0 0 16 16">
+          <path d="M8 9.05a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
+          <path d="M1 1a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h.5a.5.5 0 0 0 .5-.5.5.5 0 0 1 1 0 .5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5.5.5 0 0 1 1 0 .5.5 0 0 0 .5.5h.5a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H6.707L6 1.293A1 1 0 0 0 5.293 1zm0 1h4.293L6 2.707A1 1 0 0 0 6.707 3H15v10h-.085a1.5 1.5 0 0 0-2.4-.63C11.885 11.223 10.554 10 8 10c-2.555 0-3.886 1.224-4.514 2.37a1.5 1.5 0 0 0-2.4.63H1z"/>
+        </svg>
+        &nbsp;Contatti
+      </a>
+      <a href="carrello" class="navigazione w-50 p-3 d-flex align-items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+          <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+        </svg>
+        &nbsp;Carrello
+      </a>
+    </div>
+    <div class="userSection h-25 d-flex flex-row align-items-end"style="color: #df0000;">
+      <div class="dropdown">
+        <button class="btn btn-dark dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false"style="font-weight: bold;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+          </svg>
+          &nbsp;Account
+        </button>
+        <ul class="dropdown-menu bg-dark" style="border:1px solid">
+          <li *ngIf="isLoggedIn==false">
+            <a href="/login" class="dropdown-item" (click)="login()">Login</a>
+          </li>
+          <li *ngIf="isLoggedIn==true"><a class="dropdown-item" (click)="logout()">Logout</a></li>
+          <li *ngIf="isLoggedIn==true" ><a class="dropdown-item" href="storicoOrdini"style="font-weight: bold;">Storico Ordini</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

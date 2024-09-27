@@ -1,0 +1,32 @@
+<div class="container-fluid">
+  <div class="container h-100 my-5 mx-6 d-flex flex-column"  style="background-color:#f6f6f6b5; width: 98%;">
+    <div class="container-fluid h-100 my-5 mx-6 d-flex flex-row" *ngIf="u.userID!=0" style="background-color:#f6f6f6b5; width: 98%;">
+      <div class="descrizione container d-flex flex-column w-50">
+        <div class="nome my-2">
+          <h2 class="mt-1 mb-3 d-flex flex-row justify-content-center">ID: {{u.userID}}</h2>
+          <h2 class="mt-1 mb-3 d-flex flex-row justify-content-center">E-mail: {{u.email}}</h2>
+          <h4 class="my-1">Nome: {{u.firstName}}</h4>
+          <h4 class="my-1">Cognome: {{u.lastName}}</h4>
+        </div>
+        <div class="container d-flex flex-column" style="margin-bottom: 15%; margin-top: 1%;">
+          <div *ngIf="u.orders.length>=1 && u.orders[0].orderStatus!='ACTIVE'">
+            <div *ngFor="let o of u.orders; let i = index">
+              <div *ngIf="o.orderStatus!='ACTIVE' ">
+                <div class="d-flex flex-column  my-2" style="background-color: #f6f6f6;">
+                  <div class="card d-flex flex-row align-items-center" style="width: auto;">
+                    <img src="{{'data:image/jpg;base64,' + o.productsInOrder[0].product.picture}}" class="img-thumbnail" width="128px" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title"><a a [routerLink]="['/admin',  { outlets: { 'content': ['admin-orders-detail',o.orderID] } }] ">Ordine N°: #{{o.orderID}}</a></h5>
+                      <p class="card-text">Prezzo: € {{o.total}}</p>
+                      <p class="card-text">Data di acquisto: {{o.orderData | date:'dd/MM/yyyy' }}</p>
+                      <p class="card-text">Stato dell'Ordine: {{o.orderStatus}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

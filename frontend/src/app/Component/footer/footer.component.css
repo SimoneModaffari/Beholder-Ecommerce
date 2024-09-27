@@ -1,0 +1,12 @@
+*{
+  color: #df0000 !important;
+  background-color: #303030;
+}
+
+.a{
+  color: #df0000!important;
+}
+
+.link:hover{
+  background-color: #494949;
+}

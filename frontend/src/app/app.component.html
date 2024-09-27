@@ -1,0 +1,19 @@
+
+<div class="header w-100" [ngSwitch]="getUserRole()">
+  <div *ngSwitchCase="true">
+    <app-admin-header></app-admin-header>
+  </div>
+  <div *ngSwitchCase="false">
+    <app-header></app-header>
+  </div>
+</div>
+<div class="page w-100 h-100">
+  <div class="mainPage">
+    <router-outlet></router-outlet>
+  </div>
+  <div class="footer" style="height: -webkit-fill-available;">
+    <app-footer></app-footer>
+  </div>
+</div>
+
+

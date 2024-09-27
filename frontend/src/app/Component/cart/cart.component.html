@@ -1,0 +1,181 @@
+
+<div  *ngIf="loading" class="container mb-5 mt-5 d-flex flex-column align-items-center p-2" style="background-color: rgba(255, 255, 255, 0.418) ;border-radius: 8px; border: 2px inset black; width: 90%;z-index: auto;">>
+  <div class="spinner-border" style="width: 14rem; height: 14rem;" role="status">
+    <span class="visually-hidden  d-flex justify-content-center p-5">Loading...</span>
+  </div>
+</div>
+
+
+<div *ngIf="(c.orderID.orderStatus!= 'ACTIVE' || c.orderID.productsInOrder.length<=0) && !loading ">
+  <div class="container my-5 p-5 d-flex flex-column align-items-center" style="background-color: #8d8d8d96; border: 1px solid black; border-radius: 5px;" >
+    <img src="/assets/Media/images/emptyChest.jpeg" class="img-fluid" alt="carrello vuoto" width="50%">
+    <div class="d-flex flex-column align-items-center">
+      <h1>Oh-oh</h1>
+      <h2>Sembra che il tuo forziere sia vuoto, vai allo shop per riempirlo!</h2>
+      <a href="/shop/tutti/page/0" type="button" class="btn btn-secondary">Shop</a>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container my-2 py-1" style="background-color: #8d8d8d96; border: 1px solid black; border-radius: 5px;" *ngIf="c.orderID.orderStatus==='ACTIVE' && !loading && c.orderID.productsInOrder.length>0">
+  <main>
+    <div class="py-5 text-center">
+      <img class="d-block mx-auto mb-4" src="../assets/Media/images/logo.png" alt="" width="72" height="57">
+      <h2>Carrello</h2>
+      <p class="lead">Compila il seguente modulo e controlla l'ordine prima di procedere all'acquisto</p>
+    </div>
+
+    <div class="row g-5">
+      <div class="col-md-5 col-lg-4 order-md-last">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-primary">Il tuo carrello</span>
+          <span class="badge bg-primary rounded-pill">{{numeroArticoli}}</span>
+        </h4>
+        <ul class="list-group mb-3 overflow-y-auto" style="max-height: 50%;" >
+          <div *ngFor="let product of c.orderID.productsInOrder">
+            <li class="list-group-item d-flex flex-column justify-content-between lh-sm" (click)="selectedProductId=product.productInOrderID;openModal(product.productInOrderID)" style="cursor: pointer;">
+              <div>
+                <h6 class="my-0">{{product.product.name}}</h6>
+              </div>
+              <div class="d-flex flex-row justify-content-between">
+                <span class="text-body-secondary">Quantità: {{product.quantity}}</span>
+                <span class="text-body-secondary">{{product.quantity*product.product.price}}€</span>
+              </div>
+            </li>
+          </div>
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Totale (EUR)</span>
+            <strong>€{{c.orderID.total}}</strong>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Indirizzo di fatturazione</h4>
+        <form class="needs-validation" novalidate>
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label for="firstName" class="form-label">Nome</label>
+              <input type="text" class="form-control" id="firstName" placeholder="{{c.userID.firstName}}" value="{{c.userID.firstName}}" required>
+              <div class="invalid-feedback">
+                Valid first name is required.
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="lastName" class="form-label">Cognome</label>
+              <input type="text" class="form-control" id="lastName" placeholder="{{c.userID.lastName}}" value="{{c.userID.lastName}}" required>
+              <div class="invalid-feedback">
+                Valid last name is required.
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="email" class="form-label">Email </label>
+              <input type="email" class="form-control" id="email" placeholder="{{c.userID.email}}" value="{{c.userID.email}}">
+              <div class="invalid-feedback">
+                Please enter a valid email address for shipping updates.
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label for="address" class="form-label">Indirizzo</label>
+              <input type="text" class="form-control" id="address" placeholder="1234 Main St" required [(ngModel)]="indirizzo"  name="indirizzo">
+              <div class="invalid-feedback">
+                Please enter your shipping address.
+              </div>
+            </div>
+
+            <div class="col-md-5">
+              <label for="stato" class="form-label">Stato</label>
+              <select class="form-select" id="stato" required [(ngModel)]="stato" name="stato">
+                <option value="">Choose...</option>
+                <option value="Italia">Italia</option>
+              </select>
+              <div class="invalid-feedback">
+                Per favore scegli uno stato
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="regione" class="form-label">Regione</label>
+              <select class="form-select" id="regione" required required [(ngModel)]="regione" name="regione">
+                <option value="">Choose...</option>
+                <option value="Abruzzo">Abruzzo</option>
+                <option value="Basilicata">Basilicata</option>
+                <option value="Calabria">Calabria</option>
+                <option value="Campania">Campania</option>
+                <option value="Emilia-Romagna">Emilia-Romagna</option>
+                <option value="Friuli Venezia Giulia">Friuli Venezia Giulia</option>
+                <option value="Lazio">Lazio</option>
+                <option value="Liguria">Liguria</option>
+                <option value="Lombardia">Lombardia</option>
+                <option value="Marche">Marche</option>
+                <option value="Molise">Molise</option>
+                <option value="Piemonte">Piemonte</option>
+                <option value="Puglia">Puglia</option>
+                <option value="Sardegna">Sardegna</option>
+                <option value="Sicilia">Sicilia</option>
+                <option value="Toscana">Toscana</option>
+                <option value="Trentino-Alto Adige">Trentino-Alto Adige</option>
+                <option value="Umbria">Umbria</option>
+                <option value="Valle d'Aosta">Valle d'Aosta</option>
+                <option value="Veneto">Veneto</option>
+              </select>
+              <div class="invalid-feedback">
+                Per favore scegli una regione.
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label for="zip" class="form-label">CAP</label>
+              <input type="text" class="form-control" id="zip" placeholder="" required [(ngModel)]="cap" name="cap">
+              <div class="invalid-feedback">
+                Cap code required.
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <hr class="my-4">
+
+          <h4 class="mb-3">Pagamento</h4>
+
+          <div class="my-3">
+            <div class="form-check">
+              <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required (change)="aggiornaMetodoPagamento($event)">
+              <label class="form-check-label" for="debit">Contrassegno</label>
+            </div>
+            <div class="form-check">
+              <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required (change)="aggiornaMetodoPagamento($event)">
+              <label class="form-check-label" for="paypal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paypal" viewBox="0 0 16 16">
+                <path d="M14.06 3.713c.12-1.071-.093-1.832-.702-2.526C12.628.356 11.312 0 9.626 0H4.734a.7.7 0 0 0-.691.59L2.005 13.509a.42.42 0 0 0 .415.486h2.756l-.202 1.28a.628.628 0 0 0 .62.726H8.14c.429 0 .793-.31.862-.731l.025-.13.48-3.043.03-.164.001-.007a.35.35 0 0 1 .348-.297h.38c1.266 0 2.425-.256 3.345-.91q.57-.403.993-1.005a4.94 4.94 0 0 0 .88-2.195c.242-1.246.13-2.356-.57-3.154a2.7 2.7 0 0 0-.76-.59l-.094-.061ZM6.543 8.82a.7.7 0 0 1 .321-.079H8.3c2.82 0 5.027-1.144 5.672-4.456l.003-.016q.326.186.548.438c.546.623.679 1.535.45 2.71-.272 1.397-.866 2.307-1.663 2.874-.802.57-1.842.815-3.043.815h-.38a.87.87 0 0 0-.863.734l-.03.164-.48 3.043-.024.13-.001.004a.35.35 0 0 1-.348.296H5.595a.106.106 0 0 1-.105-.123l.208-1.32z"/>
+              </svg>&nbsp; PayPal</label>
+            </div>
+          </div>
+          <hr class="my-4">
+          <button *ngIf="isEverythingFulfilled()==true" class="w-100 btn btn-primary btn-lg" type="submit" (click)="purchase()">Procedi all'acquisto</button>
+          <button *ngIf="isEverythingFulfilled()==false" class="w-100 btn btn-primary btn-lg" disabled type="submit" (click)="purchase()">Procedi all'acquisto</button>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+
+
+
+<div class="modal fade" id="prodottoOrdinatoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" [ngClass]="{'show': open}" [ngStyle]="{'display': open ? 'block' : 'none'}" style="margin-top: 5%;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Cambia Quantità</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModal()"></button>
+      </div>
+      <div *ngIf="selectedProductId!=0 && selectedProductId !=null">
+        <app-product-in-order [productId]="selectedProductId"></app-product-in-order>
+      </div>
+    </div>
+  </div>
+</div>

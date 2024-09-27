@@ -1,0 +1,187 @@
+
+<div class="container-fluid d-flex flex-column p-0">
+  <div class="sidebar w-100 d-flex flex-row justify-content-around align-items-center p-2" style="z-index: 1000;">
+    <form class="d-flex" role="search" (ngSubmit)="search($event)">
+      <input class="form-control me-2" type="search" placeholder="Cerca prodotto..." aria-label="Search" [(ngModel)]="searchParam" name="searchParam">
+      <button class="btn btn-success" type="submit">Cerca</button>
+    </form>
+      <div class="dropdown ">
+        <a class="btn btn-light dropdown-toggle w-100" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Categoria
+        </a>
+        <ul class="dropdown-menu w-100">
+          <li><a class="dropdown-item" href="/shop/tutti/page/0">Tutte</a></li>
+          <li><a class="dropdown-item" href="/shop/Libri/page/0">Libri</a></li>
+          <li><a class="dropdown-item" href="/shop/Miniature/page/0">Miniature</a></li>
+          <li><a class="dropdown-item" href="/shop/Dadi/page/0">Dadi</a></li>
+          <li><a class="dropdown-item" href="/shop/Mappe/page/0">Mappe</a></li>
+          <li><a class="dropdown-item" href="/shop/Accessori/page/0">Accessori</a></li>
+        </ul>
+      </div>
+      <div class="form-check ">
+        <input class="form-check-input" type="radio" name="prezzoCrescente" id="prezzoCrescente" [(ngModel)]="selectedOption" value="prezzoCrescente" (change)="sorted=true;handleOptionChange()" >
+        <label class="form-check-label" for="prezzoCrescente">
+          Prezzo Crescente
+        </label>
+      </div>
+      <div class="form-check ">
+        <input class="form-check-input" type="radio" name="prezzoDecrescente" id="prezzoDecrescente" [(ngModel)]="selectedOption" value="prezzoDecrescente" (change)="sorted=true;handleOptionChange()">
+        <label class="form-check-label" for="prezzoDecrescente">
+          Prezzo Decrescente
+        </label>
+      </div>
+  </div>
+  <div class="navbar">
+    <button class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">Filtri</button>
+  </div>
+  <div  *ngIf="loading" class="container mb-5 mt-5 d-flex flex-column align-items-center p-2" style="background-color: rgba(255, 255, 255, 0.418) ;border-radius: 8px; border: 2px inset black; width: 90%;z-index: auto;">>
+    <div class="spinner-border" style="width: 14rem; height: 14rem;" role="status">
+      <span class="visually-hidden  d-flex justify-content-center p-5">Loading...</span>
+    </div>
+  </div>
+  <div *ngIf="!loading" class="container mb-5 mt-5 d-flex flex-column align-items-center p-2" style="background-color: rgba(255, 255, 255, 0.418) ;border-radius: 8px; border: 2px inset black; width: 90%;z-index: auto;">
+    <div class="d-flex justify-content-center flex-row flex-wrap">
+        <div class="mx-4 my-3" *ngFor="let p of productArray" >
+          <div class="card m-1" style="width: 18rem; height: 28rem; border: 3px ridge #000 !important;display: flex; flex-direction: column; align-items: center;">
+            <div class="h-50 d-flex justify-content-center p-1" style="overflow: hidden;">
+              <div class="d-flex justify-content-center align-items-center p-1" style="width: 70%;height: auto;max-width: 500px;overflow: hidden;">
+                <img src="{{'data:image/jpg;base64,' + p.picture}}" class="card-img-top p-2" alt="{{p.name}}">
+              </div>
+            </div>
+            <div class="card-body h-50 d-flex flex-column">
+              <div class="h-50">
+                <a [routerLink]="['/product', p.productID]" style="color: black;"><h5 class="card-title">{{p.name}}</h5></a>
+                <p class="card-text"style="-webkit-line-clamp: 3;
+                overflow: hidden;
+                display: -webkit-box;
+                text-overflow: ellipsis;
+                -webkit-box-orient: vertical;">{{p.description}}</p>
+              </div>
+              <div class="h-50 d-flex align-items-end" *ngIf="p.quantity>0">
+                <h5>€&nbsp;{{p.price}}</h5>
+              </div>
+              <div class="h-50 d-flex align-items-end" *ngIf="p.quantity==0">
+                <p>🚫 Non disponibile<p>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center flex-row flex-wrap">
+      <nav class="w-100 mt-5" aria-label="...">
+        <ul class="pagination" *ngIf="totalPages==2">
+          <div class="d-flex flex-row" *ngIf="pagina==0">
+            <li class="page-item disabled">
+              <span class="page-link">Precedente</span>
+            </li>
+            <li class="page-item active"><a class="page-link">{{pagina+1}}</a></li>
+            <li class="page-item" >
+              <a class="page-link" routerLink="{{endpoint}}{{pagina+1}}"(click)="pagina=pagina+1;scrollToTop()">{{pagina+2}}</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" routerLink="{{endpoint}}{{pagina+1}}"(click)="pagina=pagina+1;scrollToTop()">Successiva</a>
+            </li>
+          </div>
+          <div class="d-flex flex-row" *ngIf="pagina==totalPages-1">
+            <li class="page-item ">
+              <a class="page-link"routerLink="{{endpoint}}{{pagina-1}}" (click)="pagina=pagina-1;scrollToTop()">Precedente</a>
+            </li>
+            <li class="page-item" aria-current="page">
+              <a class="page-link" routerLink="{{endpoint}}{{pagina-1}}" (click)="pagina=pagina-1;scrollToTop()">{{pagina}}</a>
+            </li>
+            <li class="page-item active"><a class="page-link">{{pagina+1}}</a></li>
+            <li class="page-item disabled">
+              <a class="page-link" >Successiva</a>
+            </li>
+          </div>
+        </ul>
+        <ul class="pagination" *ngIf="totalPages>=3">
+          <div class="d-flex flex-row" *ngIf="pagina==0">
+            <li class="page-item disabled">
+              <a class="page-link">Precedente</a>
+            </li>
+            <li class="page-item active"><a class="page-link">{{pagina+1}}</a></li>
+            <li class="page-item" >
+              <a class="page-link" routerLink="{{endpoint}}{{pagina+1}}"(click)="pagina=pagina+1;scrollToTop()">{{pagina+2}}</a>
+            </li>
+            <li class="page-item"><a class="page-link" routerLink="{{endpoint}}{{pagina+2}}" (click)="pagina=pagina+2;scrollToTop()">{{pagina+3}}</a></li>
+            <li class="page-item">
+              <a class="page-link" routerLink="{{endpoint}}{{pagina+1}}"(click)="pagina=pagina+1;scrollToTop()">Successiva</a>
+            </li>
+          </div>
+          <div class="d-flex flex-row" *ngIf="pagina>0 && pagina<totalPages-1">
+            <li class="page-item">
+              <a class="page-link"routerLink="{{endpoint}}{{pagina-1}}" (click)="pagina=pagina-1;scrollToTop()">Precedente</a>
+            </li>
+            <li class="page-item"><a class="page-link" routerLink="{{endpoint}}{{pagina-1}}" (click)="pagina=pagina-1;scrollToTop()">{{pagina}}</a></li>
+            <li class="page-item active" aria-current="page">
+              <span class="page-link">{{pagina+1}}</span>
+            </li>
+            <li class="page-item"><a class="page-link" routerLink="{{endpoint}}{{pagina+1}}" (click)="pagina=pagina+1;scrollToTop()">{{pagina+2}}</a></li>
+            <li class="page-item">
+              <a class="page-link" routerLink="{{endpoint}}{{pagina+1}}" (click)="pagina=pagina+1;scrollToTop()">Successiva</a>
+            </li>
+          </div>
+          <div class="d-flex flex-row" *ngIf="pagina==totalPages-1">
+            <li class="page-item ">
+              <a class="page-link"routerLink="{{endpoint}}{{pagina-1}}" (click)="pagina=pagina-1;scrollToTop()">Precedente</a>
+            </li>
+            <li class="page-item "><a class="page-link" routerLink="{{endpoint}}{{pagina-2}}" (click)="pagina=pagina-2; scrollToTop()">{{pagina-1}}</a></li>
+            <li class="page-item" aria-current="page">
+              <a class="page-link" routerLink="{{endpoint}}{{pagina-1}}" (click)="pagina=pagina-1;scrollToTop()">{{pagina}}</a>
+            </li>
+            <li class="page-item active"><a class="page-link">{{pagina+1}}</a></li>
+            <li class="page-item disabled">
+              <a class="page-link" >Successiva</a>
+            </li>
+          </div>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel" style="height: 70%;">
+  <div class="offcanvas-header">
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="container d-flex p-3 flex-column g-col-6">
+      <div class="dropdown mb-5">
+        <a class="btn btn-dark dropdown-toggle w-100" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Categoria
+        </a>
+        <ul class="dropdown-menu w-100">
+          <li><a class="dropdown-item" href="/shop/tutti/page/0">Tutte</a></li>
+          <li><a class="dropdown-item" href="/shop/Libri/page/0">Libri</a></li>
+          <li><a class="dropdown-item" href="/shop/Miniature/page/0">Miniature</a></li>
+          <li><a class="dropdown-item" href="/shop/Dadi/page/0">Dadi</a></li>
+          <li><a class="dropdown-item" href="/shop/Mappe/page/0">Mappe</a></li>
+          <li><a class="dropdown-item" href="/shop/Accessori/page/0">Accessori</a></li>
+        </ul>
+      </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="prezzoCrescente" [(ngModel)]="selectedOption" value="prezzoCrescente" (change)="sorted=true;handleOptionChange()">
+        <label class="form-check-label" for="prezzoCrescente">
+          Prezzo Crescente
+        </label>
+      </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="prezzoDecrescente" [(ngModel)]="selectedOption" value="prezzoDecrescente" (change)="sorted=true;handleOptionChange()">
+        <label class="form-check-label" for="prezzoDecrescente">
+          Prezzo Decrescente
+        </label>
+      </div>
+      <form class="d-flex" role="search" (ngSubmit)="search($event)">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" [(ngModel)]="searchParam" name="searchParam">
+        <button class="btn btn-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+

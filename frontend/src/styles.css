@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Pathway+Extreme:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap');
+
+body{
+  background-image: url("/assets/Media/images/Background.jpg");
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  --sb-track-color: #6d6d6d;
+  --sb-thumb-color: #101010;
+  --sb-size: 7px;
+}
+*{
+  font-family: "Pathway Extreme", sans-serif;
+}
+
+
+
+body::-webkit-scrollbar {
+  width: var(--sb-size)
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 3px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 3px;
+
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  body {
+    scrollbar-color: var(--sb-thumb-color)
+                     var(--sb-track-color);
+  }
+}

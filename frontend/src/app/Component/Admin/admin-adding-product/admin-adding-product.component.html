@@ -1,0 +1,55 @@
+<div class="container-fluid">
+  <div class="container h-100 my-5 mx-6 d-flex flex-column"  style="background-color:#f6f6f6b5; width: 98%;">
+    <div class="container-fluid h-100 my-5 mx-6 d-flex flex-row" *ngIf="p.productID!=0" style="background-color:#f6f6f6b5; width: 98%;">
+      <div class="immagine container w-25">
+        <img src="{{'data:image/jpg;base64,' + p.picture}}" class="card-img-top p-2" alt="{{p.name}}">
+      </div>
+      <div class="descrizione container d-flex flex-column w-50">
+        <div class="nome my-2">
+          <h2 class="mt-1 mb-3 d-flex flex-row justify-content-center">{{p.name}}</h2>
+          <h4 class="my-1">{{p.description}}</h4>
+        </div>
+        <div class="quantita my-2 d-flex flex-column">
+          <h3 class="my-1">Disponibilià in magazzino: {{p.quantity}}</h3>
+          <h3 class="my-1">Prezzo: €{{p.price}}</h3>
+          <h3 class="my-1">Categoria: €{{p.category}}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="input-group input-group-sm mb-3">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Modifica titolo:</span>
+      <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" required [(ngModel)]="nuovoNome" name="nuovoNome">
+
+    </div>
+    <div class="input-group input-group-sm mb-3">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Modifica descrizione:</span>
+      <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"[(ngModel)]="nuovaDescr" required name="nuovaDescr">
+
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">€</span>
+      <span class="input-group-text">0.00</span>
+      <input type="number" class="form-control" aria-label="Dollar amount (with dot and two decimal places)"[(ngModel)]="nuovoPrezzo" required name="nuovoPrezzo">
+    </div>
+    <div class="input-group input-group-sm mb-3">
+      <span class="input-group-text" id="inputGroup-sizing-sm">Aggiorna quantità in magazzino:</span>
+      <input type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" min="0" step="1" [(ngModel)]="nuovaQuantita" required name="nuovaQuantita">
+    </div>
+    <div class="input-group mb-3">
+      <label class="input-group-text" for="inputGroupSelect01">Categoria</label>
+      <select class="form-select" id="inputGroupSelect01" [(ngModel)]="nuovaCategoria" required (change)="onCategoryChange($event)">
+        <option selected>{{p.category}}</option>
+        <option value="Libri">Libri</option>
+        <option value="Dadi">Dadi</option>
+        <option value="Miniature">Miniature</option>
+        <option value="Mappe">Mappe</option>
+        <option value="Accessori">Accessori</option>
+      </select>
+    </div>
+    <div class="input-group mb-3">
+      <input type="file" class="form-control" id="inputGroupFile02" required (change)="onFileChange($event)">
+    </div>
+    <button  *ngIf="nuovaCategoria!=''&& nuovaDescr!=''&& nuovaImmagine!=''&& nuovaQuantita>0 && nuovoNome!=''&& nuovoPrezzo>0"type="button" class="btn btn-secondary" (click)="addProduct()">Aggiungi Prodotto</button>
+    <button  *ngIf="nuovaCategoria==''||nuovaDescr==''||nuovaImmagine==''||nuovaQuantita<=0||nuovoNome==''||nuovoPrezzo<=0"type="button" class="btn btn-secondary" disabled (click)="addProduct()">Aggiungi Prodotto</button>
+  </div>
+</div>

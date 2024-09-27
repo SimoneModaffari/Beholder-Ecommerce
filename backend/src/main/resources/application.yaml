@@ -1,0 +1,37 @@
+spring:
+  jackson:
+    mapper:
+      DEFAULT_VIEW_INCLUSION: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8081/realms/LaBottegaDelBeholderRealm/protocol/openid-connect/certs
+          issuer-uri:  http://localhost:8081/realms/LaBottegaDelBeholderRealm
+  application:
+    name: La Bottega Del Beholder
+  datasource:
+    url: jdbc:postgresql://localhost:5432/Ecommerce
+    username: postgres
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+jwt:
+  auth:
+    converter:
+      resource-id: "la-bottega-del-beholder-id"
+      principle-attribute: preferred_username
+  secret: Th1s1s@VeryS3cureJWTSecr3tK3y123!
+
+
+keycloak:
+  nome-client: "La bottega del Beholder"
+  client-id: "la-bottega-del-beholder-id"
+  passwordAdmin: "password"
+  admin-client-id: "admin-cli"
+  admin-client-secret: "Dv4TACuncU58QLfPMenOWZ93L28yMOy7"
+  serverUrl: "http://localhost:8081/"
+  realmID: "LaBottegaDelBeholderRealm"
+  username-admin: "admin"

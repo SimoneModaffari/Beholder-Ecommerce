@@ -1,0 +1,79 @@
+.header{
+  position: fixed;
+  z-index: 200;
+  background-color:#000;
+  box-shadow: 0px 5px 15px 4px rgba(0,0,0,0.65);
+  width: 100vw;
+}
+.nav-link{
+  color:#fff;
+  font-family: "Popper Sans";
+}.nav-link:hover{
+  color: #fff;
+  font-weight: bolder;
+}.nav-link :active{
+  color:#fff
+}
+.nav-item:hover{
+  background-color: #df0000;
+}
+
+.logo{
+  max-width: 8%; height: auto; border: 0px; min-width: 64px;
+}
+.nomeLogo{
+  max-width: 70%; height: auto; border: 0px;
+}
+
+.navigazione{
+  font-weight: bold;
+}.navigazione:hover{
+  background-color: #303030;
+}
+
+a{
+  color: #fff ;
+  text-decoration: none;
+  font-size: 16px;
+}
+.nascondi{
+  display: none!important;
+}
+
+
+.centraLogo{
+  margin:0 !important;
+  width: 100% !important;
+  justify-content: space-between !important;
+  .logo{
+    max-width: 48px!important;
+  }
+}
+
+.hideHeader{
+  height: 0px!important;
+}
+
+.secondoHeaderSticky{
+  top:0;
+  left: 0;
+  position: fixed;
+  height: auto !important;
+  margin: 0!important;
+  background-color: black;
+  z-index: 400;
+}
+
+@media(max-width:1024px){
+  *{
+    padding-top: 0!important;
+  }
+  .header{
+    position: fixed;
+    top: 0;
+    z-index: 11;
+    .logo{
+      display: none!important;
+    }
+  }
+}

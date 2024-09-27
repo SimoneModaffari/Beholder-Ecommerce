@@ -1,0 +1,40 @@
+<div class="container d-flex flex-column" style="margin-bottom: 15%; margin-top: 1%;">
+  <div *ngIf="order.length>=1 && order[0].orderStatus!='ACTIVE'">
+    <div *ngFor="let o of order; let i = index"  class="d-flex flex-column align-items-center">
+      <div *ngIf="o.orderStatus!='ACTIVE' ">
+        <div class="d-flex flex-column my-2" style="background-color: #f6f6f6;-webkit-box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.32); box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.32);">
+          <div class="card" style="width: 21rem;">
+            <img src="{{'data:image/jpg;base64,' + o.productsInOrder[0].product.picture}}" class="card-img-top"  alt="..." width="256px" style="padding:20px;">
+            <div class="card-body">
+              <h5 class="card-title">Ordine N°: #{{o.orderID}}</h5>
+              <p class="card-text">Prezzo: € {{o.total}}</p>
+              <p class="card-text">Data di acquisto: {{o.orderData | date:'dd/MM/yyyy' }}</p>
+              <p class="card-text">Stato dell'Ordine: {{o.orderStatus}}</p>
+              <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapseExample' + i" aria-expanded="false" [attr.aria-controls]="'collapseExample' + i">
+                Vedi Prodotti
+              </button>
+            </div>
+          </div>
+          <div class="collapse m-3" [id]="'collapseExample' + i">
+            <div class="container d-flex flex-column" style="max-height: 300px; overflow-y: auto;">
+              <div *ngFor="let p of o.productsInOrder">
+                <div class="card card-body flex-row">
+                  <img src="{{'data:image/jpg;base64,' + p.product.picture}}" class="img-thumbnail" width="64px" alt="...">
+                  <div class="d-flex flex-column">
+                    <a [routerLink]="['/product', p.product.productID]" style="color: black;"><h5 class="card-title">{{p.product.name}}</h5></a>
+                    <p>Qt.à {{p.quantity}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="order.length<=1 && order[0].orderStatus=='ACTIVE'"  class="container d-flex flex-column justify-content-center align-items-center">
+    <img src="/assets/Media/images/failure.jpg" class="img-thumbnail" alt="..." style="max-width: 512px;max-height:auto; margin-bottom: 25px;">
+    <h4>Non hai effettuato ancora nessun acquisto!</h4>
+  </div>
+</div>
+

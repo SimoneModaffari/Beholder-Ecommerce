@@ -1,0 +1,54 @@
+<div class="header">
+  <div class="container-fluid d-flex flex-column p-1">
+    <div class="secondoHeader container-fluid h-25 d-flex flex-row m-0" >
+      <div class="container-fluid Logo d-flex flex-row align-items-center align-content-center w-25"[ngClass]="{'centraLogo': larghezzaFinestra<768}">
+        <img src="/assets/Media/images/logo.png" class="logo img-thumbnail bg-transparent"alt="logo" >
+        <img src="/assets/Media/images/textLogo.png" class="nomeLogo img-thumbnail bg-transparent" alt="logo">
+        <div *ngIf="larghezzaFinestra<1025"type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#df0000" class="bi bi-list" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+        </svg></div>
+      </div>
+      <div class="container navigation justify-content-end d-flex flex-row"[ngClass]="{'nascondi': larghezzaFinestra < 1025}" >
+        <div class="container menu w-75 d-flex flex-row justify-content-around m-0">
+          <a class="navigazione w-25 p-3 d-flex justify-content-center align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+          </svg>&nbsp;Account <ul class="dropdown-menu bg-dark" [ngSwitch]="isLoggedIn">
+            <div *ngSwitchCase="true">
+              <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
+            </div>
+            <li *ngSwitchCase="false" >
+              <a class="dropdown-item" (click)="login()">Login</a>
+            </li>
+          </ul></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel" style="background: linear-gradient(180deg, rgba(105,105,105,1) 0%, rgba(80,80,80,1) 35%, rgba(0,0,0,1) 94%); max-width: 90%!important;">
+  <div class="offcanvas-header">
+    <img src="/assets/Media/images/logo.png" class="logo img-fluid bg-transparent"alt="logo" >
+    <img src="/assets/Media/images/textLogo.png" class="nomeLogo img-fluid bg-transparent" alt="logo">
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="links h-75">
+    <div class="userSection h-25 d-flex flex-row align-items-end"style="color: #df0000;">
+      <div class="dropdown">
+        <button class="btn btn-dark dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false"style="font-weight: bold;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+          </svg>
+          &nbsp;Account
+        </button>
+        <ul class="dropdown-menu bg-dark" style="border:1px solid">
+          <li *ngIf="isLoggedIn==false">
+            <a href="/login" class="dropdown-item" (click)="login()">Login</a>
+          </li>
+          <li *ngIf="isLoggedIn==true"><a class="dropdown-item" (click)="logout()">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

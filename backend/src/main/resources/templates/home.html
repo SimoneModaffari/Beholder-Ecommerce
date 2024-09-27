@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista Utenti e Prodotti</title>
+</head>
+<body>
+<h1>Utenti</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Cognome</th>
+        <th>E-mail</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="utente : ${utenti}">
+        <td th:text="${utente.id}"></td>
+        <td th:text="${utente.nome}"></td>
+        <td th:text="${utente.cognome}"></td>
+        <td th:text="${utente.getEmail()}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h1>Prodotti</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Descrizione</th>
+        <!-- Aggiungi altre colonne se necessario -->
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="prodotto : ${prodotti}">
+        <td th:text="${prodotto.id}"></td>
+        <td th:text="${prodotto.nome}"></td>
+        <td th:text="${prodotto.descrizione}"></td>
+        <!-- Aggiungi altre colonne se necessario -->
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
